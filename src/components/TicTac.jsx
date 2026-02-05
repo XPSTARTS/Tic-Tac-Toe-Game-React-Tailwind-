@@ -45,7 +45,7 @@ const TicTac = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-indigo-500 via-purple-500 to-pink-500">
 
       {WinnerFound ? (
         <div className="bg-white/20 backdrop-blur-xl p-10 rounded-3xl shadow-2xl text-center">
