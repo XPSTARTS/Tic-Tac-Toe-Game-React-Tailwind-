@@ -20,15 +20,10 @@ const TicTac = () => {
 
     for (let logic of winnerLogic) {
       const [a, b, c] = logic;
-      if (
-        state[a] !== null &&
-        state[a] === state[b] &&
-        state[a] === state[c]
-      ) {
+      if (state[a] && state[a] === state[b] && state[a] === state[c]) {
         return state[a];
       }
     }
-
     return null;
   }
 
@@ -36,7 +31,7 @@ const TicTac = () => {
   const isDraw = !WinnerFound && state.every(cell => cell !== null);
 
   function handleClick(index) {
-    if (state[index] !== null || WinnerFound || isDraw) return;
+    if (state[index] || WinnerFound || isDraw) return;
 
     const copyState = [...state];
     copyState[index] = isXTurn ? "X" : "O";
@@ -50,63 +45,53 @@ const TicTac = () => {
   }
 
   return (
-    WinnerFound ? (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
 
-      <div className="flex flex-col justify-center items-center h-screen">
-        <p className="text-2xl font-bold">
-          Hurrah! "{WinnerFound}" Won the Game!
-        </p>
-
-        <button
-          className="bg-blue-700 text-white font-bold hover:text-blue-700 hover:bg-white rounded-2xl border-2 w-40 mt-4"
-          onClick={playAgain}
-        >
-          Play Again!
-        </button>
-      </div>
-
-    ) : isDraw ? (
-
-      <div className="flex flex-col justify-center items-center h-screen">
-        <p className="text-2xl font-bold">
-          It's a Draw! 🤝
-        </p>
-
-        <button
-          className="bg-blue-700 text-white font-bold hover:text-blue-700 hover:bg-white rounded-2xl border-2 w-40 mt-4"
-          onClick={playAgain}
-        >
-          Play Again!
-        </button>
-      </div>
-
-    ) : (
-
-      <div className="w-screen flex flex-col justify-center items-center h-screen">
-        <h5 className="font-bold text-2xl text-center p-4">
-          Player {isXTurn ? "X" : "O"} Turn
-        </h5>
-
-        <div className="flex">
-          <Board value={state[0]} onClick={() => handleClick(0)} />
-          <Board value={state[1]} onClick={() => handleClick(1)} />
-          <Board value={state[2]} onClick={() => handleClick(2)} />
+      {WinnerFound ? (
+        <div className="bg-white/20 backdrop-blur-xl p-10 rounded-3xl shadow-2xl text-center">
+          <h1 className="text-4xl font-extrabold text-white mb-4">
+            🎉 {WinnerFound} Wins!
+          </h1>
+          <button
+            onClick={playAgain}
+            className="mt-4 px-8 py-3 bg-white text-purple-600 font-bold rounded-full hover:scale-105 transition-all duration-300 shadow-lg"
+          >
+            Play Again
+          </button>
         </div>
 
-        <div className="flex">
-          <Board value={state[3]} onClick={() => handleClick(3)} />
-          <Board value={state[4]} onClick={() => handleClick(4)} />
-          <Board value={state[5]} onClick={() => handleClick(5)} />
+      ) : isDraw ? (
+        <div className="bg-white/20 backdrop-blur-xl p-10 rounded-3xl shadow-2xl text-center">
+          <h1 className="text-4xl font-extrabold text-white mb-4">
+            🤝 It's a Draw!
+          </h1>
+          <button
+            onClick={playAgain}
+            className="mt-4 px-8 py-3 bg-white text-pink-600 font-bold rounded-full hover:scale-105 transition-all duration-300 shadow-lg"
+          >
+            Play Again
+          </button>
         </div>
 
-        <div className="flex">
-          <Board value={state[6]} onClick={() => handleClick(6)} />
-          <Board value={state[7]} onClick={() => handleClick(7)} />
-          <Board value={state[8]} onClick={() => handleClick(8)} />
-        </div>
-      </div>
+      ) : (
+        <div className="bg-white/20 backdrop-blur-xl p-8 rounded-3xl shadow-2xl">
 
-    )
+          <h2 className="text-center text-3xl font-extrabold text-white mb-6">
+            Player <span className="text-yellow-300">{isXTurn ? "X" : "O"}</span> Turn
+          </h2>
+
+          <div className="grid grid-cols-3 gap-4">
+            {state.map((value, index) => (
+              <Board
+                key={index}
+                value={value}
+                onClick={() => handleClick(index)}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 

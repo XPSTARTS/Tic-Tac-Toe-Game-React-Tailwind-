@@ -1,15 +1,34 @@
-import React from 'react'
+import React from 'react';
 
-const Board = (props) => {
+const Board = ({ value, onClick }) => {
   return (
-    <div className='border w-30 md:w-40 md:h-20 h-10 flex justify-center items-center font-bold text-2xl'
-        onClick={props.onClick}
+    <div
+      onClick={onClick}
+      className="
+        w-24 h-24 md:w-28 md:h-28
+        bg-white/30 backdrop-blur-lg
+        rounded-2xl shadow-xl
+        flex items-center justify-center
+        text-4xl font-extrabold
+        cursor-pointer
+        hover:scale-105 hover:bg-white/40
+        transition-all duration-200
+        select-none
+      "
     >
-        <h5 >
-            {props.value}
-        </h5>
+      <span
+        className={
+          value === "X"
+            ? "text-blue-700"
+            : value === "O"
+            ? "text-pink-600"
+            : ""
+        }
+      >
+        {value}
+      </span>
     </div>
-  )
-}
+  );
+};
 
-export default Board
+export default Board;
